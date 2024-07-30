@@ -7,14 +7,12 @@
 
 import Foundation
 
-protocol NetworkingServiceProtocol: AnyObject {
-    
+protocol NetworkRetryProtocol: AnyObject {
     var retryAmount: Int { get }
-    
     func executeRequest(url: URL?, initialRetryCount: Int) async -> Results?
 }
 
-class NetworkingServiceImplementation: Operation {
+class NetworkRetryImplementation: Operation {
     
     var retryAmount: Int
     
@@ -23,20 +21,17 @@ class NetworkingServiceImplementation: Operation {
     // Why? - We want to not tightly couple the implementation of NetworkingService to the View Controller
     // How? -
     
+    
+    // Now what?
+    // 1. We have the ability to retry logic, now we queue subsequent requests
+    // 2. How do we bridge the two?
+    // 3. Upon success, my initial thought is to have this class have acccess to the queue of URLs and then execute them in parallel upon success
     init(retryAmount: Int) {
         self.retryAmount = retryAmount
     }
-    
-//    override func main() {
-//        super.main()
-//        
-//        Task {
-//            await executeRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon"), with: 3)
-//        }
-//    }
 }
 
-extension NetworkingServiceImplementation: NetworkingServiceProtocol {
+extension NetworkRetryImplementation: NetworkRetryProtocol {
     
     func executeRequest(url: URL?, initialRetryCount: Int = 0) async -> Results? {
         var currentCountForRetry = initialRetryCount
