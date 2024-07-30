@@ -23,9 +23,20 @@ class RetryViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        let urls: [URL?] = [
+            URL(string: "https://pokeapi.co/api/v2/pokemon/2/"),
+            URL(string: "https://pokeapi.co/api/v2/pokemon/3/"),
+            URL(string: "https://pokeapi.co/api/v2/pokemon/4/")
+        ]
+        
         Task {
             // Mispelled URL on purpose to see if retry logic was working
-            try await networkRetryService.executeRequest(url: URL(string: "https://pokeapi.co/api/v2/poemon"), initialRetryCount: 0)
+            let results = try await networkRetryService.executeRequest(url: URL(string: "https://pokeapi.co/api/v2/pokmon"), initialRetryCount: 0)
+            
+            if let results = results {
+                try await networkRetryService.executeQueuedRequests(urls: urls)
+            }
+            
         }
     }
 }
