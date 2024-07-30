@@ -9,12 +9,15 @@ import Foundation
 
 protocol NetworkingServiceProtocol: AnyObject {
     
-    func executeRequest(url: URL?, with currentRetryCount: Int) async -> Results?
+    var retryAmount: Int { get }
+    
+    func executeRequest(url: URL?, initialRetryCount: Int) async -> Results?
 }
 
-class NetworkingService: Operation {
+class NetworkingServiceImplementation: Operation {
     
-    let retryAmount: Int
+    var retryAmount: Int
+    
     // Goal of this class it to take a URL and retry x amount of times. X is configurable
     // We want to use dependency inversion for this but how would this work and why
     // Why? - We want to not tightly couple the implementation of NetworkingService to the View Controller
@@ -22,20 +25,31 @@ class NetworkingService: Operation {
     
     init(retryAmount: Int) {
         self.retryAmount = retryAmount
-        super.init()
     }
+    
+//    override func main() {
+//        super.main()
+//        
+//        Task {
+//            await executeRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon"), with: 3)
+//        }
+//    }
 }
 
-extension NetworkingService: NetworkingServiceProtocol {
+extension NetworkingServiceImplementation: NetworkingServiceProtocol {
     
-    func executeRequest(url: URL?, with currentRetryCount: Int = 0) async -> Results? {
-        guard let url = url else { return nil }
+    func executeRequest(url: URL?, initialRetryCount: Int = 0) async -> Results? {
+        var currentCountForRetry = initialRetryCount
         
-        var currentCountForRetry = currentRetryCount
+        guard
+            let url = url,
+            currentCountForRetry <= retryAmount
+        else { return nil }
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let results = try JSONDecoder().decode(Results.self, from: data)
+            print("Successfully decoded results")
             return results
         }
         catch {
@@ -43,8 +57,9 @@ extension NetworkingService: NetworkingServiceProtocol {
             if currentCountForRetry <= retryAmount {
                 currentCountForRetry += 1
                 print("Retrying request for the \(currentCountForRetry) time")
-                return await executeRequest(url: url, with: currentCountForRetry)
+                return await executeRequest(url: url, initialRetryCount: currentCountForRetry)
             } else {
+                print("Retrying request for the \(currentCountForRetry) time")
                 print("Error trying to decode results")
                 return nil
             }
