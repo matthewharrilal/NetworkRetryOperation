@@ -16,3 +16,7 @@ struct Result: Decodable {
     let name: String?
     let url: String
 }
+
+struct Pokemon: Decodable {
+    let name: String
+}
