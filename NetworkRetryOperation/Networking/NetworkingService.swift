@@ -9,7 +9,7 @@ import Foundation
 
 protocol NetworkRetryProtocol: AnyObject {
     var retryAmount: Int { get }
-    func executeRequest(url: URL?, initialRetryCount: Int) async -> Results?
+    func executeRequest(url: URL?) async -> Results?
     func executeQueuedRequests(urls: [URL?]) async -> AsyncStream<Pokemon?>
 }
 
@@ -34,32 +34,28 @@ class NetworkRetryImplementation: Operation {
 
 extension NetworkRetryImplementation: NetworkRetryProtocol {
     
-    func executeRequest(url: URL?, initialRetryCount: Int = 0) async -> Results? {
-        var currentCountForRetry = initialRetryCount
+    func executeRequest(url: URL?) async -> Results? {
+        var currentCountForRetry = 0
         
         guard
             let url = url,
             currentCountForRetry <= retryAmount
         else { return nil }
         
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let results = try JSONDecoder().decode(Results.self, from: data)
-            print("Successfully decoded results")
-            return results
-        }
-        catch {
-            
-            if currentCountForRetry <= retryAmount {
+        while currentCountForRetry <= retryAmount {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let results = try JSONDecoder().decode(Results.self, from: data)
+                print("Successfully decoded results")
+                return results
+            }
+            catch {
                 currentCountForRetry += 1
                 print("Retrying request for the \(currentCountForRetry) time")
-                return await executeRequest(url: url, initialRetryCount: currentCountForRetry)
-            } else {
-                print("Retrying request for the \(currentCountForRetry) time")
-                print("Error trying to decode results")
-                return nil
             }
         }
+        
+        return nil
     }
     
     func executeQueuedRequests(urls: [URL?]) async -> AsyncStream<Pokemon?> {

@@ -31,7 +31,7 @@ class RetryViewController: UIViewController {
         
         Task {
             // Mispelled URL on purpose to see if retry logic was working
-            let results = try await networkRetryService.executeRequest(url: URL(string: "https://pokeapi.co/api/v2/pokmon"), initialRetryCount: 0)
+            let results = try await networkRetryService.executeRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon"))
             
             if let results = results {
                 try await networkRetryService.executeQueuedRequests(urls: urls)
