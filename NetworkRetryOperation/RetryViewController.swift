@@ -8,6 +8,7 @@
 import UIKit
 
 class RetryViewController: UIViewController {
+        
     let networkRetryService: NetworkRetryProtocol
     
     init(networkRetryService: NetworkRetryProtocol) {

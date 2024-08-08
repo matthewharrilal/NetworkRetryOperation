@@ -9,6 +9,7 @@ import Foundation
 
 protocol NetworkRetryProtocol: AnyObject {
     var retryAmount: Int { get }
+    var token: String? { get }
     func executeRequest(url: URL?) async -> Results?
     func executeQueuedRequests(urls: [URL?]) async -> AsyncStream<Pokemon?>
 }
@@ -16,6 +17,8 @@ protocol NetworkRetryProtocol: AnyObject {
 class NetworkRetryImplementation: Operation {
     
     var retryAmount: Int
+    
+    var token: String?
         
     // Goal of this class it to take a URL and retry x amount of times. X is configurable
     // We want to use dependency inversion for this but how would this work and why
@@ -32,7 +35,7 @@ class NetworkRetryImplementation: Operation {
     }
 }
 
-class NetworkRetryImplementation: NetworkRetryProtocol {
+extension NetworkRetryImplementation: NetworkRetryProtocol {
     
     func executeRequest(url: URL?) async -> Results? {
         var currentCountForRetry = 0
@@ -47,6 +50,7 @@ class NetworkRetryImplementation: NetworkRetryProtocol {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 let results = try JSONDecoder().decode(Results.self, from: data)
                 print("Successfully decoded results")
+                self.token = "Hello World"
                 return results
             }
             catch {

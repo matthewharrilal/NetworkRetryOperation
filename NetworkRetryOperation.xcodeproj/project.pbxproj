@@ -18,6 +18,9 @@
 		766EE0932C59314200B54DB9 /* NetworkRetryOperationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0922C59314200B54DB9 /* NetworkRetryOperationUITestsLaunchTests.swift */; };
 		766EE0A12C59318300B54DB9 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0A02C59318300B54DB9 /* NetworkingService.swift */; };
 		766EE0A42C59346E00B54DB9 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0A32C59346E00B54DB9 /* Pokemon.swift */; };
+		766EE0EC2C5B54E000B54DB9 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0EB2C5B54E000B54DB9 /* Car.swift */; };
+		766EE0EE2C5B54E700B54DB9 /* Ferrari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0ED2C5B54E700B54DB9 /* Ferrari.swift */; };
+		766EE0F02C5B54ED00B54DB9 /* Toyota.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE0EF2C5B54ED00B54DB9 /* Toyota.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		766EE0922C59314200B54DB9 /* NetworkRetryOperationUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRetryOperationUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		766EE0A02C59318300B54DB9 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		766EE0A32C59346E00B54DB9 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		766EE0EB2C5B54E000B54DB9 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		766EE0ED2C5B54E700B54DB9 /* Ferrari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ferrari.swift; sourceTree = "<group>"; };
+		766EE0EF2C5B54ED00B54DB9 /* Toyota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toyota.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 		766EE06E2C59314100B54DB9 /* NetworkRetryOperation */ = {
 			isa = PBXGroup;
 			children = (
+				766EE0EA2C5B54D600B54DB9 /* Tests */,
 				766EE0A22C59346500B54DB9 /* Models */,
 				766EE09F2C59315800B54DB9 /* Networking */,
 				766EE06F2C59314100B54DB9 /* AppDelegate.swift */,
@@ -147,6 +154,16 @@
 				766EE0A32C59346E00B54DB9 /* Pokemon.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		766EE0EA2C5B54D600B54DB9 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				766EE0EB2C5B54E000B54DB9 /* Car.swift */,
+				766EE0ED2C5B54E700B54DB9 /* Ferrari.swift */,
+				766EE0EF2C5B54ED00B54DB9 /* Toyota.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,9 +299,12 @@
 			files = (
 				766EE0A42C59346E00B54DB9 /* Pokemon.swift in Sources */,
 				766EE0742C59314100B54DB9 /* RetryViewController.swift in Sources */,
+				766EE0EC2C5B54E000B54DB9 /* Car.swift in Sources */,
 				766EE0702C59314100B54DB9 /* AppDelegate.swift in Sources */,
 				766EE0722C59314100B54DB9 /* SceneDelegate.swift in Sources */,
 				766EE0A12C59318300B54DB9 /* NetworkingService.swift in Sources */,
+				766EE0EE2C5B54E700B54DB9 /* Ferrari.swift in Sources */,
+				766EE0F02C5B54ED00B54DB9 /* Toyota.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

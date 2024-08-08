@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         let networkRetryService = NetworkRetryImplementation(retryAmount: 3)
-        window?.rootViewController = RetryViewController(networkRetryService: networkRetryService)
+        window?.rootViewController = RetryViewController(networkRetryService: mockImplemetation)
         window?.makeKeyAndVisible()
     }
 
